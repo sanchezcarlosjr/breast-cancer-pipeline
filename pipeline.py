@@ -12,7 +12,7 @@ def perform(data):
     }
 
 ds = ray.data.read_binary_files(
-    "s3://minioadmin:minioadmin@?scheme=http&endpoint_override=localhost%3A9000",
+    "s3://minioadmin:minioadmin@?scheme=http&endpoint_override=192.168.0.8%3A9000",
     include_paths=True)
 
 

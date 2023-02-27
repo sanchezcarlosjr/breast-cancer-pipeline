@@ -19,7 +19,7 @@ source env/bin/activate
 
 Start the head node
 ```bash
-ray start --head --port=6379
+ray start --head --port=6379 && docker compose up
 ```
 
 Connect the nodes to head node
