@@ -4,19 +4,17 @@ import ray
 import os
 
 def perform(data):
-    path, img = data
-    print(path)
+    print(data[0])
     return {
-        "path": path,
+        "path": "abc",
         "text": "abc"
     }
 
 ds = ray.data.read_binary_files(
-    "s3://minioadmin:minioadmin@?scheme=http&endpoint_override=192.168.0.8%3A9000",
-    include_paths=True)
+    "s3://minioadmin:minioadmin@normal_02?scheme=http&endpoint_override=192.168.0.8%3A9000",
+    include_paths=True
+)
 
+pipe = ds.map(perform)
 
-# Perform OCR on the images
-results = ds.map(perform)
-
-results.take(10)
+pipe.take(10)
