@@ -10,3 +10,9 @@ Using curl
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/sanchezcarlosjr/breast-cancer-pipeline/main/installer)
 ```
+
+# Getting started
+Activate the environment.
+```bash
+source env/bin/activate
+```
