@@ -11,10 +11,8 @@ def perform(data):
         "text": "abc"
     }
 
-uri = "s3://minioadmin:minioadmin@?scheme=http&endpoint_override=localhost%3A9000"
-
 ds = ray.data.read_binary_files(
-    uri,
+    "s3://minioadmin:minioadmin@?scheme=http&endpoint_override=localhost%3A9000",
     include_paths=True)
 
 
