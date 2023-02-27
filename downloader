@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
 cat index.txt | parallel -j+0 "wget -r {}" && find . -type f -name '*.LJPEG' | parallel -j+0 "ljpeg {} "\$\(dirname {}\)/{/.}.tiff""
+mkdir mammograms; cd mammograms && find .. -type f -name '*.LJPEG' | parallel -j+0 "dirname {} | xargs -n1 dirname | xargs -n1 basename | xargs -n1 mcli mb"
