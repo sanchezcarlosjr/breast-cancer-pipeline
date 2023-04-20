@@ -16,4 +16,4 @@ npy:
 	source env/bin/activate && python load_npy.py ${url}
 
 image:
-	source env/bin/activate && python read_from_url.py ${url}
+	source env/bin/activate && python display_original_image.py ${url}
