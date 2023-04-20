@@ -1,5 +1,6 @@
 import ray
 from ray.data.datasource import FileExtensionFilter
+from decouple import config 
 
 ds = ray.data.read_binary_files(
     config('FILESYSTEM'),
