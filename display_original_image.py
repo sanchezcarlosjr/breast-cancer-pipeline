@@ -1,8 +1,9 @@
 import requests
 import cv2
 import numpy as np
+from decouple import config 
 
-response = requests.get(sys.argv[1])
+response = requests.get(config('REST')+sys.argv[1])
 response.raise_for_status()
 image = np.frombuffer(response.content, np.uint16)
 image = cv2.imdecode(image, cv2.IMREAD_UNCHANGED)
