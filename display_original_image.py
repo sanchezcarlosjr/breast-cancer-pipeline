@@ -1,7 +1,8 @@
 import requests
 import cv2
 import numpy as np
-from decouple import config 
+from decouple import config
+import sys
 
 response = requests.get(config('REST')+sys.argv[1])
 response.raise_for_status()
