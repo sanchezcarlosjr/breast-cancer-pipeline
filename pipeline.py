@@ -20,7 +20,7 @@ def perform(batch):
     from decouple import config 
     
     # Read
-    image = np.frombuffer(batch[0][1], dtype=np.uint16)
+    image = np.frombuffer(batch[0][1], dtype=np.uint8)
     image = cv2.imdecode(image, cv2.IMREAD_UNCHANGED)
 
     image = image[70:image.shape[0]-250, 30:image.shape[0]]
