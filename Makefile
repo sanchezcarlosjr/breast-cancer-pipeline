@@ -14,3 +14,6 @@ exec: start
 
 npy:
 	source env/bin/activate && python load_npy.py ${url}
+
+image:
+	source env/bin/activate && python read_from_url.py ${url}
