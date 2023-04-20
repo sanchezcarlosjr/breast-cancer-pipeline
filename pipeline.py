@@ -1,13 +1,10 @@
 import ray
 from ray.data.datasource import FileExtensionFilter
-import requests
-import json
-from decouple import config 
 
 ds = ray.data.read_binary_files(
     config('FILESYSTEM'),
     include_paths=True,
-    partition_filter=FileExtensionFilter("LJPEG")
+    partition_filter=FileExtensionFilter("tif")
 )
 
 def perform(batch):
@@ -17,30 +14,13 @@ def perform(batch):
     import tempfile
     import requests
     import cv2
-    import numpy 
     import numpy as np
     import os.path
-    import requests_cache
-    requests_cache.install_cache(cache_name='minio_cache', backend='sqlite', expire_after=180)
-    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-        temp_file.write(batch[0][1])
-        temp_file.flush()
-        temp_path = temp_file.name
-    ics = batch[0][0].split(".")[-3].replace("_", "-")+".ics"
-    url = config('REST')+ics
-    ics_text = requests.get(url, stream=True).text
-    ics_info = get_ics_info_from_text(ics_text.split("\n"), os.path.basename(ics)[0])
-    name = os.path.basename(batch[0][0]).split(".")[-2]
-    W = ics_info[name]['width']
-    H = ics_info[name]['height']
-    image = read(temp_path)
-    os.remove(temp_path)
-    if W != image.shape[1]:
-        image = image.reshape((H, W))
-    # gray correction
-    image = od_correct(image, ics_info)
-    image = numpy.interp(image, (0.0, 4.0), (255, 0))
-    image = image.astype(numpy.uint8)
+    from decouple import config 
+    
+    # Read
+    image = np.frombuffer(batch[0][1], dtype=np.uint16)
+    image = cv2.imdecode(image, cv2.IMREAD_UNCHANGED)
 
     image = image[70:image.shape[0]-250, 30:image.shape[0]]
 
@@ -69,6 +49,7 @@ def perform(batch):
 
     # save numpy file
     dsImage = ray.data.from_numpy([image])
+    name = os.path.basename(batch[0][0]).split(".")[-2]
     path = os.path.dirname(batch[0][0])+"/"+name+".npy"
     dsImage.write_numpy(config('UPLOADS').replace("REPLACE_THIS", path))
 
