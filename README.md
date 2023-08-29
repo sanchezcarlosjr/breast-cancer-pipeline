@@ -27,3 +27,9 @@ make exec
 ```
 make npy url="localhost:9000/[...].npy"
 ```
+
+
+## Pipelines
+### V1
+The first pipeline is based on 
+
